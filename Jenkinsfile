@@ -16,6 +16,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
+                sh 'which docker'
                 sh 'docker build -t myflaskapp .'
             }
         }
