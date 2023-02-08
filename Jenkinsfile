@@ -10,23 +10,20 @@
     }
 }
 */
-pipeline {
-    agent any
-
-    stages {
-        stage('Build Docker Image') {
-            steps {
-                sh 'which docker'
-                sh 'docker build -t myflaskapp .'
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                sh 'docker tag myflaskapp $DOCKER_USERNAME/myflaskapp:latest'
-                sh 'docker push $DOCKER_USERNAME/myflaskapp:latest'
-            }
-        }
+node {
+   stage('Get Source') {
+      // copy source code from local file system and test
+      // for a Dockerfile to build the Docker image
+      git ('https://github.com/SapirCohenn/flask-app-exercise.git')
+      if (!fileExists("Dockerfile")) {
+         error('Dockerfile missing.')
+      }
+   }
+   stage('Build Docker') {
+       // build the docker image from the source code using the BUILD_ID parameter in image name
+         sh "docker build -t myflaskapp ."
+   }
+   stage("run docker container"){
+        sh "docker run -p 5000:5000 myflaskapp"
     }
 }
