@@ -9,7 +9,8 @@ pipeline {
         }
         stage('Build Docker') {
             steps {
-                sh "docker build -t myflaskapp:${env.BUILD_NUMBER} ."
+                sh 'docker build -t myflaskapp .'
+                sh 'docker tag myflaskapp:latest 718688527926.dkr.ecr.us-east-1.amazonaws.com/myflaskapp:latest'
             }
         }
         stage('run docker container') {
@@ -25,14 +26,12 @@ pipeline {
                             sh '''
                             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
                             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-                            aws configure set default.region us-west-2
+                            aws configure set default.region us-east-1
                             '''
                          }
-
-                        // AWS Code
-                        docker.withRegistry('https://718688527926.dkr.ecr.us-east-1.amazonaws.com/', 'aws_credentials') {
-                            sh "docker push myflaskapp:${env.BUILD_NUMBER}"
-                        }
+                            // AWS Code
+                            sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 718688527926.dkr.ecr.us-east-1.amazonaws.com'
+                            sh 'docker push 718688527926.dkr.ecr.us-east-1.amazonaws.com/myflaskapp:latest'
                 }
             }
         }
