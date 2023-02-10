@@ -1,9 +1,13 @@
 pipeline {
-    agent { any }
+    agent any 
     stage('Build Docker') {
-        sh "docker build -t myflaskapp ."
+        steps {
+            sh "docker build -t myflaskapp ."
+        }
     }
     stage("run docker container") {
-        sh "docker run -p 5000:5000 myflaskapp"
+        steps {
+            sh "docker run -p 5000:5000 myflaskapp"
+        }
     }
 }
