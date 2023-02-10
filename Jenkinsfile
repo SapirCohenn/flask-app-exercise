@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Docker') {
             steps {
-                sh 'docker build -t myflaskapp .'
+                sh "docker build -t myflaskapp:${env.BUILD_NUMBER} ."
             }
         }
         stage('run docker container') {
