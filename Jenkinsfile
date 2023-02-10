@@ -21,16 +21,16 @@ pipeline {
             steps {
                 script {
                     withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: 'sapircohen_credentials',
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]) {
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: 'sapircohen_credentials',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
                         // AWS Code
-                        docker.withRegistry('https://718688527926.dkr.ecr.us-east-1.amazonaws.com/', 'ecr:us-east-1:aws-credentials') {
+                        docker.withRegistry('https://718688527926.dkr.ecr.us-east-1.amazonaws.com/', 'sapircohen_credentials') {
                             sh "docker push myflaskapp:${env.BUILD_NUMBER}"
                         }
-            }
+                    }
                 }
             }
         }
