@@ -9,13 +9,13 @@ pipeline {
         }
         stage('Build Docker') {
             steps {
-                sh 'docker build -t myflaskapp .'
-                sh 'docker tag myflaskapp:latest 718688527926.dkr.ecr.us-east-1.amazonaws.com/myflaskapp:latest'
+                sh 'docker build -t flask_cdpipeline .'
+                sh 'docker tag flask_cdpipeline:latest 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
             }
         }
         stage('run docker container') {
             steps {
-                sh 'docker run --name amit -d -p 5000:5000 myflaskapp '
+                sh 'docker run --name amit -d -p 5000:5000 flask_cdpipeline '
             }
         }
         stage('aws credentials and push ecr') {
@@ -31,7 +31,7 @@ pipeline {
                          }
                             // AWS Code
                             sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 718688527926.dkr.ecr.us-east-1.amazonaws.com'
-                            sh 'docker push 718688527926.dkr.ecr.us-east-1.amazonaws.com/myflaskapp:latest'
+                            sh 'docker push 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
                 }
             }
         }
