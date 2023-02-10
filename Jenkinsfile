@@ -20,17 +20,19 @@ pipeline {
         stage('aws credentials and push ecr') {
             steps {
                 script {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'aws_credentials',
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                    ]]) {
+                    withCredentials([string(credentialsId: 'ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+                         string(credentialsId: 'SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                            sh '''
+                            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                            aws configure set default.region us-west-2
+                            '''
+                         }
+
                         // AWS Code
                         docker.withRegistry('https://718688527926.dkr.ecr.us-east-1.amazonaws.com/', 'aws_credentials') {
                             sh "docker push myflaskapp:${env.BUILD_NUMBER}"
                         }
-                    }
                 }
             }
         }
