@@ -8,7 +8,7 @@ pipeline {
         }
         stage('run docker container') {
             steps {
-                sh 'docker run -d -p 5000:5000 myflaskapp --name amit'
+                sh 'docker run --name amit -d -p 5000:5000 myflaskapp '
             }
         }
     }
