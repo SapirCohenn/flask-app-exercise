@@ -4,6 +4,7 @@ pipeline {
         stage('stop docker container if exists') {
             steps {
                 sh 'docker stop amit || true'
+                sh 'docker rm amit || true'
             }
         }
         stage('Build Docker') {
