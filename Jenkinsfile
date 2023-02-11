@@ -4,7 +4,7 @@ pipeline {
         stage('SSH into remote host') {
             steps {
                 sshagent(['ssh_appserver']) {
-                    sh 'ssh ubuntu@54.167.68.155 "ls -l"'
+                    sh 'ssh ubuntu@54.234.159.23 "ls -l"'
                 }
             }
         }
