@@ -2,8 +2,10 @@ pipeline {
     agent any
     stages {
         stage('SSH into remote host') {
-            sshagent(['ssh_appserver']) {
-                sh "ssh -i StrictHostKeyChecking=no ubuntu@52.91.0.106 'ls -l'"
+            steps {
+                sshagent(['ssh_appserver']) {
+                    sh "ssh -i StrictHostKeyChecking=no ubuntu@52.91.0.106 'ls -l'"
+                }
             }
         }
         stage('Build Docker') {
