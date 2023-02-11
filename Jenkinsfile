@@ -4,7 +4,7 @@ pipeline {
         stage('SSH into remote host') {
             steps {
                 sshagent(['ssh_appserver']) {
-                    sh "ssh -i StrictHostKeyChecking=no ubuntu@52.91.0.106 'ls -l'"
+                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 52.91.0.106 who'
                 }
             }
         }
