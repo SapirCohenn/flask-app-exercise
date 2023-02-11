@@ -43,6 +43,12 @@ pipeline {
                 sh 'docker pull 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
             }
         }
+        stage('stop docker container if exists') {
+            steps {
+                sh 'docker stop flask_cdpipeline || true'
+                sh 'docker rm flask_cdpipeline || true'
+            }
+        }
         stage('build a container') {
             steps {
                 sh 'docker run --name newflaskapp -d -p 5000:5000 flask_cdpipeline:latest'
