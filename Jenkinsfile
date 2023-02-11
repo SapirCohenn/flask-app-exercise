@@ -1,25 +1,12 @@
 pipeline {
     agent any
     stages {
-        /*stage('stop docker container if exists') {
-            steps {
-                sh 'docker stop amit || true'
-                sh 'docker rm amit || true'
-            }
-        }
-        */
         stage('Build Docker') {
             steps {
                 sh 'docker build -t flask_cdpipeline .'
                 sh 'docker tag flask_cdpipeline:latest 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
             }
         }
-        /*stage('run docker container') {
-            steps {
-                sh 'docker run --name amit -d -p 5000:5000 flask_cdpipeline '
-            }
-        }
-        */
         stage('aws credentials and push ecr') {
             steps {
                 script {
@@ -45,8 +32,8 @@ pipeline {
         }
         stage('stop docker container if exists') {
             steps {
-                sh 'docker stop amit || true'
-                sh 'docker rm amit || true'
+                sh 'docker stop newflaskapp || true'
+                sh 'docker rm newflaskapp || true'
             }
         }
         stage('build a container') {
