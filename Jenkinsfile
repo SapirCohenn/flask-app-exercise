@@ -37,5 +37,11 @@ pipeline {
                 }
             }
         }
+        stage('pull image from ecr') {
+            steps {
+                sh '$(aws ecr get-login --no-include-email --region us-east-1)'
+                sh 'docker pull 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
+            }
+        }
     }
 }
