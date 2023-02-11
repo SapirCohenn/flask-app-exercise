@@ -1,12 +1,10 @@
 pipeline {
-    agent {
-        label '52.91.0.106'
-    }
+    agent any
     stages {
         stage('SSH into remote host') {
             steps {
                 sshagent(['ssh_appserver']) {
-                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 52.91.0.106 who'
+                    sh 'ssh ubuntu@52.91.0.106 "ls -l"'
                 }
             }
         }
