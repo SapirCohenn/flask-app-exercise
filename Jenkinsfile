@@ -45,8 +45,8 @@ pipeline {
         }
         stage('stop docker container if exists') {
             steps {
-                sh 'docker stop flask_cdpipeline || true'
-                sh 'docker rm flask_cdpipeline || true'
+                sh 'docker stop amit || true'
+                sh 'docker rm amit || true'
             }
         }
         stage('build a container') {
