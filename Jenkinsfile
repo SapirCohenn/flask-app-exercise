@@ -1,12 +1,10 @@
 pipeline {
-    agent {
-        label '52.91.0.106'
-    }
+    agent any
     stages {
         stage('SSH into remote host') {
             steps {
                 sshagent(['ssh_appserver']) {
-                    sh 'ssh ubuntu@52.91.0.106 "ls -l"'
+                    sh 'ssh ubuntu@54.234.159.23 "ls -l"'
                 }
             }
         }
