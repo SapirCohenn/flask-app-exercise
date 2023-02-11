@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('SSH into remote host') {
+            sshagent(credentials: ['ssh_appserver']) {
+                sh "ssh -i StrictHostKeyChecking=no ubuntu@52.91.0.106 'ls -l'"
+            }
+        }
         stage('Build Docker') {
             steps {
                 sh 'docker build -t flask_cdpipeline .'
