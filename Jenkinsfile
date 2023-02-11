@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label '52.91.0.106'
+    }
     stages {
         stage('SSH into remote host') {
             steps {
