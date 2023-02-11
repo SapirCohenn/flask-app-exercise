@@ -5,8 +5,6 @@ pipeline {
             steps {
                 sshagent(['ssh_appserver']) {
                     sh 'ssh ubuntu@52.91.0.106 "ls -l"'
-                    sh 'docker build -t flask_cdpipeline .'
-                    sh 'docker tag flask_cdpipeline:latest 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
                 }
             }
         }
