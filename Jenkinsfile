@@ -35,7 +35,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['ssh-app']) {
                     sh '''
-                     'ssh -o StrictHostKeyChecking=no ubuntu@35.173.252.19 "ls -l"'
+                     'ssh -o StrictHostKeyChecking=no ubuntu@35.173.252.19'
                      '$(aws ecr get-login --no-include-email --region us-east-1)'
                      'docker pull 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
                      'docker stop newflaskapp || true'
