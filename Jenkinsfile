@@ -35,7 +35,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['ssh-app']) {
                     sh '''
-                     ssh ubuntu@your-remote-host-IP 'bash -c "\
+                     ssh ubuntu@35.173.252.19 'bash -c "\
                      docker pull 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest; \
                      docker stop newflaskapp || true; \
                      docker rm newflaskapp || true; \
