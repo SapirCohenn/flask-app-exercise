@@ -34,14 +34,13 @@ pipeline {
         stage('SSH into remote host, pull and run') {
             steps {
                 sshagent(credentials: ['ssh-app']) {
-                    sh '''
-                     'ssh -o StrictHostKeyChecking=no ubuntu@35.173.252.19'
-                     '$(aws ecr get-login --no-include-email --region us-east-1)'
-                     'docker pull 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest'
-                     'docker stop newflaskapp || true'
-                     'docker rm newflaskapp || true'
-                     'docker run --name newflaskapp -d -p 5000:5000 flask_cdpipeline:latest'
-                     '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@35.173.252.19 'bash -c "\
+                    $(aws ecr get-login --no-include-email --region us-east-1)\
+                    && docker pull 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest\
+                    && docker stop newflaskapp || true\
+                    && docker rm newflaskapp || true\
+                    && docker run --name newflaskapp -d -p 5000:5000 718688527926.dkr.ecr.us-east-1.amazonaws.com/flask_cdpipeline:latest\
+                    "'
                 }
             }
         }
